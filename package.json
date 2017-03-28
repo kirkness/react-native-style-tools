@@ -1,0 +1,12 @@
+{
+  "name": "react-native-style-tools",
+  "version": "0.0.1",
+  "description": "Functional tools for writing styles in React Native.",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/kirkness/react-native-style-tools",
+    "type": "git"
+  },
+  "author": "Henry Kirkness",
+  "license": "MIT"
+}
