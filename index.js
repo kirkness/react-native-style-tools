@@ -1,5 +1,6 @@
 // @flow
 import { StyleSheet, Dimensions } from 'react-native';
+import type { StyleToolsSheet } from './types.flow';
 
 const dimensions = Dimensions.get('window');
 
@@ -18,15 +19,16 @@ export function percentage(perc: number, direction: 'height' | 'width') {
 /**
  * Mutates global config obj to add consts.
  */
-export function buildConsts(consts: { [key: any]: any }): void {
+export function buildConsts(consts: { [key: any]: any }): { [key: any]: any } {
   config.consts = { ...consts };
+  return { ...consts };
 }
 
 
 /**
  * Create a stylesheet, call back is passed the global consts.
  */
-export function createStyleSheet(callback: Function): { [key: string]: number } {
+export function createStyleSheet(callback: Function): StyleToolsSheet {
   if (!config.consts) {
     console.warn('createStyleSheet found no constants, make sure you first call buildConsts');
   }
@@ -53,7 +55,8 @@ const isScaleable = (key, value) => {
 /**
  * Scale a stylesheet's scaleable props by a factor.
  */
-export function scale(factor, { __original }) {
+export function scale(factor, { __original }): StyleToolsSheet {
+  // TODO: Refactor. Handle exceptions.
   return createStyleSheet(() => (
     Object.keys(__original).reduce((styles, key) => ({
       ...styles,
@@ -66,6 +69,12 @@ export function scale(factor, { __original }) {
   ));
 }
 
+/**
+ * Get single config value.
+ */
+export function getStyleConst(prop: string | number) {
+  return config.consts[prop];
+}
 
 /**
  * Import option 2.
